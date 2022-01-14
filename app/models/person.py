@@ -1,5 +1,6 @@
 import os
 from http import HTTPStatus
+from tkinter import E
 from app.services.json_manipulation import load_json_file, write_json_file
 from app.services.person_service import check_email_exist
 from excecoes.email_verify_error import EmailVerifyError
@@ -22,6 +23,7 @@ class Person:
 
         if check_email_exist(filepath, person["email"]):
             raise EmailVerifyError
+            
 
         return write_json_file(filepath, self.__dict__)
 

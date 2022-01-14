@@ -1,4 +1,5 @@
 
+from inspect import Attribute
 import json
 import os
 from ujson import dump, load
@@ -21,10 +22,8 @@ def load_json_file(filepath: str):
 
 
 def write_json_file(filepath: str, payload: dict):
-        data.append(payload)
-        with open(filepath, 'w') as json_file:
-
+    data.append(payload)
+    with open(filepath, 'w') as json_file:
             dump(data, json_file, indent=2)
 
-
-        return payload
+    return payload

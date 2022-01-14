@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
-from app.models.person import Person
 import os
 from http import HTTPStatus
+from app.models.person import Person
 
 
 from app.services.json_manipulation import load_json_file, write_json_file
@@ -24,8 +24,8 @@ def load_user():
 @app.post('/user')
 def create_user():
     data = Person(**request.get_json())
-    try:
-        Person.create_id(data, path_route)
-        return data.create_file(path_route), HTTPStatus.CREATED
-    except EmailVerifyError:
-        return {'msg': "User already exists."}, HTTPStatus.CONFLICT
+    print(data)
+    Person.create_id(data, path_route)
+    return data.create_file(path_route), HTTPStatus.CREATED
+    
+
