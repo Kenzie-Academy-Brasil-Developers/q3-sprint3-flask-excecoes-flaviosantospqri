@@ -1,7 +1,7 @@
 import os
-from unicodedata import numeric
-
 from app.services.json_manipulation import load_json_file, write_json_file
+from app.services.person_service import check_email_exist
+from excecoes.email_verify_error import EmailVerifyError
 
 
 
@@ -16,7 +16,13 @@ class Person:
        return load_json_file(filepath)
 
     def create_file(self, filepath: str):
+        person = self.__dict__
+
+        if check_email_exist(filepath, person["email"][1]):
+            raise EmailVerifyError
+
         return write_json_file(filepath, self.__dict__)
+
     @staticmethod
     def generate_id(id:int):
         ...
