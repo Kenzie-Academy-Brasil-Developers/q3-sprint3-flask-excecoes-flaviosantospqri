@@ -23,9 +23,16 @@ def load_user():
 
 @app.post('/user')
 def create_user():
-    data = Person(**request.get_json())
-    print(data)
-    Person.create_id(data, path_route)
-    return data.create_file(path_route), HTTPStatus.CREATED
+    try:
+        my_dict = dict(**request.get_json())
+        if type(my_dict["nome"]) != str or type(my_dict["email"]) != str:
+            return {"msg": "invalid type"}, HTTPStatus.BAD_REQUEST
+        else:
+            data = Person(**my_dict)
+        Person.create_id(data, path_route)
+        return data.create_file(path_route), HTTPStatus.CREATED
+    except EmailVerifyError:
+        return {"msg": 'invalid insert value for email'}, HTTPStatus.CONFLICT
+        
     
 
