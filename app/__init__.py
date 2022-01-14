@@ -5,6 +5,7 @@ from http import HTTPStatus
 
 
 from app.services.json_manipulation import load_json_file, write_json_file
+from excecoes.email_verify_error import EmailVerifyError
 app = Flask(__name__)
 
 FOLDER_DIRECTORY = os.getenv('FOLDER_DIRECTORY')
@@ -23,5 +24,8 @@ def load_user():
 @app.post('/user')
 def create_user():
     data = Person(**request.get_json())
-    return data.create_file(path_route), HTTPStatus.CREATED
-    # return write_json_file(path_route, data), HTTPStatus.CREATED
+    try:
+        Person.create_id(data, path_route)
+        return data.create_file(path_route), HTTPStatus.CREATED
+    except EmailVerifyError:
+        return {'msg': "User already exists."}, HTTPStatus.CONFLICT
