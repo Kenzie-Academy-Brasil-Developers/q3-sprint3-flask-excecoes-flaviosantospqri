@@ -21,7 +21,7 @@ def load_json_file(filepath: str):
 
 
 def write_json_file(filepath: str, payload: dict):
-        data["data"].append(payload)
+        data.append(payload)
         with open(filepath, 'w') as json_file:
             dump(data, json_file, indent=2)
 

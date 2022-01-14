@@ -18,7 +18,7 @@ class Person:
     def create_file(self, filepath: str):
         person = self.__dict__
 
-        if check_email_exist(filepath, person["email"][1]):
+        if check_email_exist(filepath, person["email"]):
             raise EmailVerifyError
 
         return write_json_file(filepath, self.__dict__)
